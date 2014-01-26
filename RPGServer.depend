@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1390622506 source:c:\users\jason\documents\rpgserver\main.cpp
+	<iostream>
+	<string>
+	<sstream>
+	"socket.h"
+	<list>
+	<map>
+	<process.h>
+	<winsock2.h>
+
+1390431924 c:\users\jason\documents\rpgserver\socket.h
+	<winsock2.h>
+	<string>
+
+1390431948 source:c:\users\jason\documents\rpgserver\socket.cpp
+	"socket.h"
+
