@@ -12,6 +12,7 @@ using namespace std;
 char RPG[4]  = {'R', 'P', 'G', '_'};
 char RPGC[4] = {'R', 'P', 'G', 'C'};
 char RPGD[4] = {'R', 'P', 'G', 'D'};
+char RPGS[4] = {'R', 'P', 'G', 'S'};
 
 struct Client
 {
@@ -40,7 +41,6 @@ int main()
   }
 
   cout << "Server Active" << endl;
-  cout << sizeof(fromAddr);
 
   while (true)
   {
@@ -62,37 +62,6 @@ int main()
         memcpy(&addr, &fromAddr, sizeof(fromAddr));
         ss << addr << tmpC.name;
         list<Client>::iterator it;
-        for(it = clients.begin(); it != clients.end(); it++)
-        {
-          memset(&tmp, 0, sizeof(tmp));
-          tmp.sin_family = it->addr.sin_family;
-          tmp.sin_addr = it->addr.sin_addr;
-          tmp.sin_port = it->addr.sin_port;
-          if(sock.sendMessage(&tmp, ss.str()) < 0)
-          {
-            cout << "Send error: " << WSAGetLastError();
-          }
-        }
-      }
-      else
-      {
-        list<Client>::iterator it;
-        stringstream ss;
-        ss.str(string());
-        ss << "CIM";
-        bool isFound = false;
-        for(it = clients.begin(); it != clients.end(); it++)
-        {
-          if(!memcmp(&(it->addr), &fromAddr, sizeof(fromAddr)))
-          {
-            ss << it->name << ": ";
-            isFound = true;
-          }
-        }
-        if(!isFound)
-          ss << inet_ntoa(fromAddr.sin_addr) << ":" << ntohs(fromAddr.sin_port) << ": ";
-        ss << messageBuffer + 3;
-        //cout << "Sent: " << ss.str() << endl;
         for(it = clients.begin(); it != clients.end(); it++)
         {
           memset(&tmp, 0, sizeof(tmp));
