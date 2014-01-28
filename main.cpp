@@ -55,13 +55,25 @@ int main()
         memcpy(&tmpC, &fromAddr, sizeof(fromAddr));
         ss << messageBuffer + 4;
         tmpC.name = ss.str();
-        clients.push_back(tmpC);
+        //char addr[16];
+        list<Client>::iterator it;
+        for(it = clients.begin(); it != clients.end(); it++)
+        {
+          ss.str(string());
+          //memcpy(&addr, &(it->addr), sizeof(struct sockaddr_in));
+          ss << "RPGS" << ":" << inet_ntoa(it->addr.sin_addr) << ":" << ntohs(it->addr.sin_port) << ":" << it->name;
+          cout << ss.str() << endl;
+          if(sock.sendMessage(&fromAddr, ss.str()) < 0)
+          {
+            cout << "Send error: " << WSAGetLastError();
+          }
+        }
+
+
         cout << "Added: " << inet_ntoa(fromAddr.sin_addr) << ", " << messageBuffer + 4 << " to list\n";
         ss.str(string());
-        char addr[16];
-        memcpy(&addr, &fromAddr, sizeof(fromAddr));
-        ss << addr << tmpC.name;
-        list<Client>::iterator it;
+        ss << "RPGS" << ":" << inet_ntoa(tmpC.addr.sin_addr) << ":" << ntohs(tmpC.addr.sin_port) << tmpC.name;
+
         for(it = clients.begin(); it != clients.end(); it++)
         {
           memset(&tmp, 0, sizeof(tmp));
@@ -73,6 +85,8 @@ int main()
             cout << "Send error: " << WSAGetLastError();
           }
         }
+
+        clients.push_back(tmpC);
       }
     }
     memset(messageBuffer, '\0', 1000);

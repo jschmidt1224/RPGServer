@@ -23,3 +23,14 @@
 	<winsock2.h>
 	<string>
 
+1390884232 source:c:\users\jason\documents\github\rpgserver\main.cpp
+	<iostream>
+	<string>
+	<sstream>
+	"socket.h"
+	<list>
+	<map>
+	<process.h>
+	<winsock2.h>
+	<windows.h>
+
